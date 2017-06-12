@@ -1,11 +1,15 @@
 package at.aoi.cms.v12
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import org.springframework.web.client.RestClientException
 import org.springframework.web.client.RestTemplate
 
 /**
  * @author Gary Ye
  */
 class CMSClient {
+    private final Logger LOG = LoggerFactory.getLogger(CMSClient.class)
     private final String serverUrl
     private final RestTemplate restTemplate
 
@@ -14,7 +18,7 @@ class CMSClient {
         this.restTemplate = new RestTemplate()
     }
 
-    void createUser(CMSUserDto user, CMSContestDto contest) {
+    boolean createUser(CMSUserDto user, CMSContestDto contest) {
         String postURL = "http://{serverUrl}/contest/{contestId}/user/{username}"
         def data = [
                 first_name: user.firstName,
@@ -27,6 +31,14 @@ class CMSClient {
                 username : user.username,
                 contestId: contest.contestId
         ]
-        restTemplate.put(postURL, data, vars)
+        try {
+            restTemplate.put(postURL, data, vars)
+        } catch (RestClientException e) {
+            LOG.error("Could not create a user ${user.username} for contest ${contest.contestId}", e)
+            return false
+        }
+        return true
     }
+
+    // TODO: Maybe find user
 }
