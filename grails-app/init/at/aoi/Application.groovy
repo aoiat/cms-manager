@@ -1,4 +1,4 @@
-package cms.manager
+package at.aoi
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration

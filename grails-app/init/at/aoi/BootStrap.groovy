@@ -1,4 +1,4 @@
-package cms.manager
+package at.aoi
 
 class BootStrap {
 

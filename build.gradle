@@ -11,7 +11,7 @@ buildscript {
 }
 
 version "0.1"
-group "cms.manager"
+group "at.aoi"
 
 apply plugin:"eclipse"
 apply plugin:"idea"

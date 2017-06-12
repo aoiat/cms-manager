@@ -2,7 +2,7 @@
 grails:
     profile: web
     codegen:
-        defaultPackage: cms.manager
+        defaultPackage: at.aoi
     spring:
         transactionManagement:
             proxies: false
