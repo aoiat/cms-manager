@@ -3,7 +3,7 @@ package at.aoi
 import grails.compiler.GrailsCompileStatic
 
 @GrailsCompileStatic
-class ContestPlatform {
+class ContestPlatform<T extends Contest, S extends User> {
     String name
     String url
 
@@ -11,20 +11,20 @@ class ContestPlatform {
         name blank: false, nullable: false
     }
 
-    User createUser(Person person) {
+    S createUser(Person person) {
         throw new UnsupportedOperationException("Abstract contest platform does not support this method")
     }
 
-    User findUser(Person person) {
+    S findUser(Person person) {
         throw new UnsupportedOperationException("Abstract contest platform does not support this method")
     }
 
-    User createUserForContest(Person person, Contest contest) {
+    S createUserForContest(Person person, T contest) {
         // Many platforms do not have an account for every contest so we just call createUser
         return createUser(person)
     }
 
-    User findUserForContest(Person person, Contest contest) {
+    S findUserForContest(Person person, T contest) {
         // Many platforms do not have an account for every contest so we just call findUser
         return findUser(person)
     }

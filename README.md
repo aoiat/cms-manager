@@ -6,3 +6,9 @@ A small service that can manage user accounts for different contests hosted on d
   - Contests
   - Users
 * Open source, so feel free to extend this! 
+
+CMS Support
+-----------
+
+* Can deploy docker containers to preconfigured machines/swarms.
+* Uses CMSClient (v1.2 and v1.3)

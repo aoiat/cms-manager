@@ -2,16 +2,11 @@ package at.aoi
 
 import at.aoi.dto.UserDto
 import at.aoi.exceptions.NotFoundException
-import grails.rest.RestfulController
 
-class UserController extends RestfulController<User> {
+class UserController {
     static responseFormats = ['json', 'xml']
 
     def userService
-
-    UserController() {
-        super(User)
-    }
 
     private def handleNotFoundException(NotFoundException e) {
         response.status = 404
@@ -21,12 +16,12 @@ class UserController extends RestfulController<User> {
     private static def renderUserDto(UserDto dto) {
         [username: dto.username,
          password: dto.password,
-         platform: dto.contestPlatformUrl]
+         platform: dto.contestPlatformUrl,
+         contest : dto.contestUrl]
     }
 
     def createUserForContest(int contestId, String userEmail) {
-        UserDto dto = userService.createUserForContest(contestId, userEmail)
-        renderUserDto(dto)
+        renderUserDto(userService.createUserForContest(contestId, userEmail))
     }
 
     def queryUserForContest(int contestId, String userEmail) {

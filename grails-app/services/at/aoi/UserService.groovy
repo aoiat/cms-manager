@@ -6,6 +6,7 @@ import grails.transaction.Transactional
 
 @Transactional
 class UserService {
+    // TODO: Make sure that every method is really transactional because saving and then something fails -> RIP
     UserDto createUserForContest(long contestId, String userEmail) {
         Contest contest = Contest.findById(contestId)
         if (contest == null) {

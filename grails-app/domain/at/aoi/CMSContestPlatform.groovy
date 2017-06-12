@@ -7,26 +7,26 @@ package at.aoi
  *
  * @author Gary Ye
  */
-class CMSContestPlatform extends ContestPlatform {
+class CMSContestPlatform extends ContestPlatform<CMSContest, CMSUser> {
     static String cmsVersion = 'v1.2'
 
     @Override
-    User createUser(Person person) {
-        throw new UnsupportedOperationException("Not supported in CMS v1.2. Refer to v1.3")
+    CMSUser createUser(Person person) {
+        throw new UnsupportedOperationException("Not supported in CMS ${cmsVersion}. Refer to v1.3+")
     }
 
     @Override
-    User findUser(Person person) {
-        throw new UnsupportedOperationException("Not supported in CMS v1.2. Refer to v1.3")
+    CMSUser findUser(Person person) {
+        throw new UnsupportedOperationException("Not supported in CMS ${cmsVersion}. Refer to v1.3+")
     }
 
     @Override
-    User createUserForContest(Person person, Contest contest) {
-        // API calls LUL
+    CMSUser createUserForContest(Person person, CMSContest contest) {
+
     }
 
     @Override
-    User findUserForContest(Person person, Contest contest) {
+    CMSUser findUserForContest(Person person, Contest contest) {
         // API calls LUL
     }
 }
