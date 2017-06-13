@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional
  */
 class CMSContestPlatform extends ContestPlatform<CMSUser> {
     static String cmsVersion = 'v1.2'
+    // TODO: Maybe don't use admin url as contest platform url
 
     @Override
     CMSUser createUser(Person person) {
@@ -46,7 +47,7 @@ class CMSContestPlatform extends ContestPlatform<CMSUser> {
         cmsUser.save()
 
         CMSClient cms = new CMSClient(this.url)
-        CMSUserDto userDto = new CMSUserDto(username: 'aoi' + person.id, password: 'todo')
+        CMSUserDto userDto = new CMSUserDto(username: cmsUser.username, password: cmsUser.password)
         CMSContestDto contestDto = new CMSContestDto(contestId: cmsContest.cmsContestId)
         cms.createUser(userDto, contestDto)
         return cmsUser
