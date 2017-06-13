@@ -20,11 +20,11 @@ class UserController {
          contest : dto.contestUrl]
     }
 
-    def createUserForContest(int contestId, String userEmail) {
+    def createUserForContest(long contestId, String userEmail) {
         renderUserDto(userService.createUserForContest(contestId, userEmail))
     }
 
-    def queryUserForContest(int contestId, String userEmail) {
+    def queryUserForContest(long contestId, String userEmail) {
         renderUserDto(userService.findUserForPlatform(contestId, userEmail))
     }
 

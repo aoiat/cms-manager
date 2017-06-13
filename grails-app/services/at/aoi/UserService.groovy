@@ -14,7 +14,8 @@ class UserService {
         }
         Person person = Person.findOrCreateByEmail(userEmail)
         User user = contest.contestPlatform.createUserForContest(person, contest)
-        return createUserForPlatform(contest.contestPlatform.id, userEmail)
+        return new UserDto(username: user.username, password: user.password,
+                contestPlatformUrl: contest.contestPlatform.url)
     }
 
     UserDto createUserForPlatform(long contestPlatformId, String userEmail) {

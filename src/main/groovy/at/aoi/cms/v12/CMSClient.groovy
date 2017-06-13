@@ -2,6 +2,11 @@ package at.aoi.cms.v12
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.util.LinkedMultiValueMap
+import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RestClientException
 import org.springframework.web.client.RestTemplate
 
@@ -18,26 +23,45 @@ class CMSClient {
         this.restTemplate = new RestTemplate()
     }
 
-    boolean createUser(CMSUserDto user, CMSContestDto contest) {
-        String postURL = "http://{serverUrl}/contest/{contestId}/user/{username}"
-        def data = [
-                first_name: user.firstName,
-                last_name : user.lastName,
-                password  : user.password,
-                email     : user.email,
+    static MultiValueMap<String, String> fromMap(LinkedHashMap<String, Object> map) {
+        MultiValueMap<String, String> mvp = new LinkedMultiValueMap<>()
+        for (a in map) {
+            mvp.add(a.key, a.value.toString())
+        }
+        return mvp
+    }
+
+    void createUser(CMSUserDto user, CMSContestDto contest) {
+        String postURL = "http://${serverUrl}/add_user/{contestId}"
+        LinkedHashMap<String, Object> data = [
+                first_name        : user.firstName,
+                last_name         : user.lastName,
+                username          : user.username,
+                password          : user.password,
+                email             : user.email,
+                ip                : '',
+                timezone          : '',
+                starting_time     : '',
+                delay_time        : 0,
+                extra_time        : 0,
+                hidden            : false,
+                primary_statements: []
         ]
+
         def vars = [
-                serverUrl: serverUrl,
-                username : user.username,
                 contestId: contest.contestId
         ]
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(fromMap(data),
+                headers);
         try {
-            restTemplate.put(postURL, data, vars)
+            String ignored = restTemplate.postForObject(postURL, request, String.class, vars)
+            LOG.info("Received response: ${ignored}")
         } catch (RestClientException e) {
-            LOG.error("Could not create a user ${user.username} for contest ${contest.contestId}", e)
-            return false
+            throw e;
         }
-        return true
     }
 
     // TODO: Maybe find user

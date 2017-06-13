@@ -1,10 +1,7 @@
 package at.aoi
 
-import grails.compiler.GrailsCompileStatic
-
-@GrailsCompileStatic
-class User {
-    static belongsTo = [person: Person, contestPlatform: ContestPlatform]
+abstract class User<P extends ContestPlatform> {
+    static belongsTo = [person: Person, contestPlatform: P]
     String username
     String password
 

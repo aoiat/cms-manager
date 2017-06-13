@@ -1,9 +1,6 @@
 package at.aoi
 
-import grails.compiler.GrailsCompileStatic
-
-@GrailsCompileStatic
-class ContestPlatform<T extends Contest, S extends User> {
+abstract class ContestPlatform<S extends User> {
     String name
     String url
 
@@ -19,12 +16,12 @@ class ContestPlatform<T extends Contest, S extends User> {
         throw new UnsupportedOperationException("Abstract contest platform does not support this method")
     }
 
-    S createUserForContest(Person person, T contest) {
+    S createUserForContest(Person person, Contest contest) {
         // Many platforms do not have an account for every contest so we just call createUser
         return createUser(person)
     }
 
-    S findUserForContest(Person person, T contest) {
+    S findUserForContest(Person person, Contest contest) {
         // Many platforms do not have an account for every contest so we just call findUser
         return findUser(person)
     }

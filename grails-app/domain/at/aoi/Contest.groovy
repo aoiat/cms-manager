@@ -1,13 +1,14 @@
 package at.aoi
 
-import grails.compiler.GrailsCompileStatic
-
-@GrailsCompileStatic
-class Contest {
+abstract class Contest {
     static belongsTo = [contestPlatform: ContestPlatform]
     String name
 
     static constraints = {
-        name blank: false
+        name nullable: true
+    }
+
+    static mapping = {
+        tablePerHierarchy false
     }
 }

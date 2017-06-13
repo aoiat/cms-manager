@@ -13,5 +13,8 @@ class Person {
     }
     static constraints = {
         email nullable: false, unique: true
+        firstName nullable: true
+        lastName nullable: true
+        birthDate nullable: true
     }
 }
