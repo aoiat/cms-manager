@@ -5,7 +5,9 @@ A small service that can manage user accounts for different contests hosted on d
 * Use the REST API to query the following data:
   - Contests
   - Users
-* Open source, so feel free to extend this! 
+* A small overview of the architecture:
+
+![aoi diagrams](https://user-images.githubusercontent.com/22201185/27079156-e0220b82-5036-11e7-8fd0-1de32351d3ca.png)
 
 CMS Support
 -----------
