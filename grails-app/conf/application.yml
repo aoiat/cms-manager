@@ -116,7 +116,7 @@ environments:
         dataSource:
             driverClassName: com.mysql.jdbc.Driver
             dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-            username: aoi
-            password: aoigold
-            dbCreate: create
-            url: jdbc:mysql://localhost:3307/aoi-db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false
+            dbCreate: update
+            username: "${MYSQL_USER}"
+            password: "${MYSQL_PASSWORD}"
+            url: "${MYSQL_DB_URL}"
