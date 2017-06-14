@@ -5,33 +5,47 @@ import grails.test.mixin.TestFor
 import spock.lang.Specification
 
 /**
- * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
+ * Unit testing the UserController
  */
 @TestFor(UserController)
 class UserControllerSpec extends Specification {
     final Long CONTEST_ID = 42L
     final String EMAIL = "hello@gary.ye"
+    final UserDto USER_DTO = new UserDto(username: "gary", password: "password", contestPlatformUrl: "www.cf.com",
+            contestUrl: "www.cf.com/contest/42")
 
-    UserService userService = Mock(UserService)
+    UserService userService
 
     def setup() {
+        userService = Mock(UserService.class)
         controller.userService = userService
     }
 
-    def cleanup() {
+
+    def testCreateUserForContestJSONResponse() {
+        when:
+        controller.createUserForContest(CONTEST_ID, EMAIL)
+
+        then:
+        1 * userService.createUserForContest(CONTEST_ID, EMAIL) >> USER_DTO
+        response.json.username == USER_DTO.username
+        response.json.password == USER_DTO.password
+        response.json.contest_url == USER_DTO.contestUrl
+        response.json.platform_url == USER_DTO.contestPlatformUrl
     }
 
-    def testCreateContestForUserCorrectResponse() {
+
+    def testQueryUserFromPersonAndContestCorrectJSONResponse() {
         when:
-        UserDto userDto = new UserDto(username: "gary", password: "password",
-                contestPlatformUrl: "www.codeforces.com", contestUrl: "www.codeforces.com/contest/42")
-        userService.createUserForContest(CONTEST_ID, EMAIL) >> userDto
-        controller.createUserForContest(CONTEST_ID, EMAIL)
+        controller.findUserForContest(CONTEST_ID, EMAIL)
+
         then:
-        response.json.username == "gary"
-        response.json.password == "password"
-        response.json.contest_url == "www.codeforces.com/contest/42"
-        response.json.platform_url == "www.codeforces.com"
+        1 * userService.findUserForContest(CONTEST_ID, EMAIL) >> USER_DTO
+        response.json.username == USER_DTO.username
+        response.json.password == USER_DTO.password
+        response.json.contest_url == USER_DTO.contestUrl
+        response.json.platform_url == USER_DTO.contestPlatformUrl
     }
+
 
 }

@@ -18,6 +18,20 @@ class UserService {
                 contestPlatformUrl: contest.contestPlatform.url)
     }
 
+    UserDto findUserForContest(long contestId, String userEmail) {
+        Contest contest = Contest.findById(contestId)
+        if (contest == null) {
+            throw new NotFoundException("Contest with id ${contestId} not found")
+        }
+        Person person = Person.findByEmail(userEmail)
+        if (person == null) {
+            throw new NotFoundException("Person with id ${userEmail} not found")
+        }
+
+        ContestPlatform contestPlatform = ContestPlatform.findById(contestPlatformId)
+        return contestPlatform.findUser(person)
+    }
+
     UserDto createUserForPlatform(long contestPlatformId, String userEmail) {
         ContestPlatform contestPlatform = ContestPlatform.findById(contestPlatformId)
         if (contestPlatform == null) {
