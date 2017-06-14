@@ -1,7 +1,7 @@
 package at.aoi
 
-abstract class User<P extends ContestPlatform> {
-    static belongsTo = [person: Person, contestPlatform: P]
+abstract class User {
+    static belongsTo = [person: Person, contestPlatform: ContestPlatform]
     String username
     String password
 
@@ -9,4 +9,6 @@ abstract class User<P extends ContestPlatform> {
         username nullable: false, blank: false
         password nullable: false
     }
+
+    static mapping = { tablePerHierarchy false }
 }

@@ -1,6 +1,6 @@
 package at.aoi
 
-abstract class ContestPlatform<S extends User> {
+abstract class ContestPlatform {
     String name
     String url
 
@@ -8,20 +8,24 @@ abstract class ContestPlatform<S extends User> {
         name blank: false, nullable: false
     }
 
-    S createUser(Person person) {
+    static mapping = {
+        tablePerHierarchy false
+    }
+
+    User createUser(Person person) {
         throw new UnsupportedOperationException("Abstract contest platform does not support this method")
     }
 
-    S findUser(Person person) {
+    User findUser(Person person) {
         throw new UnsupportedOperationException("Abstract contest platform does not support this method")
     }
 
-    S createUserForContest(Person person, Contest contest) {
+    User createUserForContest(Person person, Contest contest) {
         // Many platforms do not have an account for every contest so we just call createUser
         return createUser(person)
     }
 
-    S findUserForContest(Person person, Contest contest) {
+    User findUserForContest(Person person, Contest contest) {
         // Many platforms do not have an account for every contest so we just call findUser
         return findUser(person)
     }

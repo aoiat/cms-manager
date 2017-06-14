@@ -13,17 +13,17 @@ import org.springframework.transaction.annotation.Transactional
  *
  * @author Gary Ye
  */
-class CMSContestPlatform extends ContestPlatform<CMSUser> {
+class CMSContestPlatform extends ContestPlatform {
     static String cmsVersion = 'v1.2'
     // TODO: Maybe don't use admin url as contest platform url
 
     @Override
-    CMSUser createUser(Person person) {
+    User createUser(Person person) {
         throw new UnsupportedOperationException("Not supported in CMS ${cmsVersion}. Refer to v1.3+")
     }
 
     @Override
-    CMSUser findUser(Person person) {
+    User findUser(Person person) {
         throw new UnsupportedOperationException("Not supported in CMS ${cmsVersion}. Refer to v1.3+")
     }
 
@@ -35,7 +35,7 @@ class CMSContestPlatform extends ContestPlatform<CMSUser> {
 
     @Override
     @Transactional
-    CMSUser createUserForContest(Person person, Contest contest) {
+    User createUserForContest(Person person, Contest contest) {
         CMSContest cmsContest = CMSContest.findById(contest.id)
         Long cmsAccountId = CMSUser.count() + 1
         CMSUser cmsUser = new CMSUser(person: person,
@@ -54,7 +54,7 @@ class CMSContestPlatform extends ContestPlatform<CMSUser> {
     }
 
     @Override
-    CMSUser findUserForContest(Person person, Contest contest) {
+    User findUserForContest(Person person, Contest contest) {
         return CMSUser.findByPersonAndContest(person, CMSContest.findById(contest.id))
     }
 }
