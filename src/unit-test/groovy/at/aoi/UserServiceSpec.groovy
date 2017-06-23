@@ -20,15 +20,9 @@ class UserServiceSpec extends Specification {
 
     def setup() {
         person = new Person(email: "garyye@gmail.com").save()
-        cmsContestPlatform = new CMSContestPlatform(name: "CMS", url: "fake:url://irre.levant")
-        cmsContestPlatform.save()
-
-        cmsContest = new CMSContest(name: 'Contest 42', cmsContestId: 42, description: 'Empty', contestPlatform: cmsContestPlatform)
-        cmsContest.save()
-
-        cmsUser = new CMSUser(cmsId: 3, username: 'aoi1', password: 'password', person: person, contestPlatform:
-                cmsContestPlatform, contest: cmsContest)
-        cmsUser.save()
+        cmsContestPlatform = new CMSContestPlatform(name: "CMS", url: "fake:url://irre.levant").save()
+        cmsContest = new CMSContest(name: 'Contest 42', cmsContestId: 42, description: 'Empty', contestPlatform: cmsContestPlatform).save()
+        cmsUser = new CMSUser(cmsId: 3, username: 'aoi1', password: 'password', person: person, contestPlatform: cmsContestPlatform, contest: cmsContest).save()
     }
 
     void "test create user should throw error when already exists"() {
